@@ -8,6 +8,7 @@ const corsOptions = require('./config/corsOptions');
 const credentials = require('./middleware/credentials');
 const verifyJWT = require('./middleware/verifyJWT');
 const register = require('./controllers/register/register.routes');
+const userAuth = require('./controllers/auth/auth.routes');
 
 const app = express();
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/register', register)
+app.use('/auth', userAuth);
 
 app.use(verifyJWT);
 app.use(notFound);
