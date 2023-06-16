@@ -92,7 +92,7 @@ const findUserWithToken = async (req, res) => {
         }
 
         user.password = hashedPassword;
-        const resto = await user.save();
+        await user.save();
 
         const access_token = generateToken(
             {
