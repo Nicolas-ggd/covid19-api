@@ -21,7 +21,6 @@ const resetUserPassword = async (req, res) => {
         // }
 
         const authUser = await User.findOne({ email });
-        console.log(authUser, 'authUser')
 
         const randomToken = randomHaxString(8)
 
@@ -70,7 +69,6 @@ const resetUserPassword = async (req, res) => {
 
 const findUserWithToken = async (req, res) => {
     const { token, password, confirmPassword } = req.body;
-    console.log(req.body)
 
     try {
         if (password !== confirmPassword) {
