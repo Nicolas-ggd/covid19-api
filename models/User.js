@@ -21,6 +21,14 @@ const User = new mongoose.Schema(
         ResetPasswordHash: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "ResetPasswordHash"
+        },
+        verificationCode: {
+            type: String,
+            required: true
+        },
+        verified: {
+            type: Boolean,
+            default: false
         }
     },
     {

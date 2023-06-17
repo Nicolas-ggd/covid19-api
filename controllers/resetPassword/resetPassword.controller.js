@@ -1,9 +1,9 @@
-const ResetPassword = require('../../models/ResetPasswordHash');
-const User = require('../../models/User');
-const crypto = require('crypto');
-const nodeMailer = require('nodemailer');
-const generateToken = require('../../config/generateToken');
 const bcrypt = require('bcrypt');
+const nodeMailer = require('nodemailer');
+const crypto = require('crypto');
+const User = require('../../models/User');
+const generateToken = require('../../config/generateToken');
+const ResetPassword = require('../../models/ResetPasswordHash');
 
 const randomHaxString = (length) => {
     return crypto
@@ -16,9 +16,9 @@ const resetUserPassword = async (req, res) => {
     const { email } = req.body;
 
     try {
-        // if (!email) {
-        //     return res.status(400).json({ message: "Email is requried to reset password" });
-        // }
+        if (!email) {
+            return res.status(400).json({ message: "Email is requried to reset password" });
+        }
 
         const authUser = await User.findOne({ email });
 
@@ -40,8 +40,8 @@ const resetUserPassword = async (req, res) => {
         const nodeTransporter = nodeMailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'ggdnicolas@gmail.com',
-                pass: 'bdhxpkgfwwztnqtk'
+                user: process.env.USER_EMAIL,
+                pass: process.env.USER_PASS
             }
         });
 
