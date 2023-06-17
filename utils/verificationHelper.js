@@ -22,16 +22,29 @@ const isEmailVerified = async (email) => {
     }
 };
 
-const resendVErificationCode = async (req, res) => {
+const resendVerificationCode = async (req, res) => {
     const { email } = req.body;
 
     try {
         let userVerified = await User.findOne({ email });
 
-        if (userVerified && userVerified.verified) {
-            return res.status(200).json({ status: true, message: "Email send" });
+        if (userVerified) {
+
+            if (userVerified.verified) {
+                return res.status(400).json({ status: true, message: "User is already verified." });
+            }
+
+            let verificationCode = userVerified.verificationCode;
+            let isEmailSend = await sendVerificationCode(email, verificationCode);
+
+            if (isEmailSend) {
+                return res.status(200).json({ status: true, message: "Code is sended in email" });
+            } else {
+                return res.status(400).json({ status: false, message: "Code isn't sended in email" });
+            }
+
         } else {
-            return res.status(400).json({ status: false, message: "Email doesnot exist" });
+            return res.status(400).json({ status: false, message: "Email does't exist" });
         }
 
     } catch (error) {
@@ -53,7 +66,7 @@ const sendVerificationCode = async (email, verificationCode) => {
         to: email,
         subject: "Verification email",
         html: verificationTemplate(
-            process.env.FRONTEND_URL = "/verify/" + verificationCode
+            process.env.FRONTEND_URL + "/verify/" + verificationCode
         )
     }
 
@@ -69,7 +82,7 @@ const sendVerificationCode = async (email, verificationCode) => {
 
 const verify = async (req, res) => {
     const { verificationCode } = req.body;
-
+    
     try {
         let userVerified = await User.findOneAndUpdate(
             { verificationCode },
@@ -83,8 +96,9 @@ const verify = async (req, res) => {
         }
     } catch (error) {
         console.log(error);
+        return res.status(500).json(false);
     }
-}
+};
 
 const verificationTemplate = (verification_link) => {
     return `
@@ -120,8 +134,8 @@ const verificationTemplate = (verification_link) => {
 
 module.exports = {
     generateVerificationCode,
-    isEmailVerified,
-    resendVErificationCode,
     sendVerificationCode,
+    isEmailVerified,
+    resendVerificationCode,
     verify
 };
