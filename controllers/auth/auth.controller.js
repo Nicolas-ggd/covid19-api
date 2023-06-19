@@ -1,8 +1,9 @@
 const User = require('../../models/User');
 const generateToken = require('../../config/generateToken');
+const verificationHelper = require('../../utils/verificationHelper');
 
 const userAuth = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password, verificationCode } = req.body;
 
     try {
         if (!email || !password) {
@@ -11,6 +12,8 @@ const userAuth = async (req, res) => {
 
         const authUser = await User.findOne({ email });
 
+        await verificationHelper.verify(verificationCode);
+        
         if (!authUser.verified) {
             return res.status(401).json({ message: "Your account is not verified, please check your email and verify account." });
         }

@@ -66,7 +66,7 @@ const sendVerificationCode = async (email, verificationCode) => {
         to: email,
         subject: "Verification email",
         html: verificationTemplate(
-            process.env.FRONTEND_URL + "/verify/" + verificationCode
+            process.env.FRONTEND_URL + "/verify?verifyCode=" + verificationCode
         )
     }
 
@@ -80,23 +80,15 @@ const sendVerificationCode = async (email, verificationCode) => {
     return response;
 };
 
-const verify = async (req, res) => {
-    const { verificationCode } = req.body;
+const verify = async (verificationCode) => {
     
     try {
-        let userVerified = await User.findOneAndUpdate(
+        await User.findOneAndUpdate(
             { verificationCode },
             { verified: true }
         );
-
-        if (userVerified) {
-            return res.status(200).json(true);
-        } else {
-            return res.status(400).json(false);
-        }
     } catch (error) {
         console.log(error);
-        return res.status(500).json(false);
     }
 };
 
