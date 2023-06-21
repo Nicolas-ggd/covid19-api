@@ -108,7 +108,7 @@ const verificationTemplate = (verification_link) => {
               <table align="center" style="margin: 20px auto;">
                 <tr>
                   <td>
-                    <a href="${verification_link}" style="background-color: #4CAF50; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 18px; text-decoration: none;">
+                    <a href="${verification_link}" style="background-color: #49d2d2; color: white; padding: 12px 20px; border: none; border-radius: 4px; cursor: pointer; font-size: 18px; text-decoration: none;">
                       Verify my email
                     </a>
                   </td>
