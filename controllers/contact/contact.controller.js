@@ -4,6 +4,10 @@ const createContact = async (req, res) => {
     const { contactType, text, email } = req.body;
 
     try {
+        if (!contactType || !text || !email) {
+            return res.status(400).json({ message: "Can't send contact information, please fill all fields" });
+
+        }
         await Contact.sendContactInfo('ggdnicolas@gmail.com', email, contactType, text)
 
         return res.status(200).json({ message: "Contact information send succesfuly." });
