@@ -12,6 +12,7 @@ const register = require('./controllers/register/register.routes');
 const userAuth = require('./controllers/auth/auth.routes');
 const userLogOut = require('./controllers/logout/logout.routes');
 const resetPassword = require('./controllers/resetPassword/resetPassword.routes');
+const userController = require('./controllers/user/user.routes');
 
 const app = express();
 dotenv.config();
@@ -26,6 +27,7 @@ app.use('/register', register);
 app.use('/auth', userAuth);
 app.use('/logout', userLogOut);
 app.use('/reset-password', resetPassword);
+app.use('/user', userController);
 
 app.use(verifyJWT);
 app.use(notFound);
