@@ -47,7 +47,7 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
 
-    socket.on('join', (data) => {
-        console.log(data)
-    })
+    // socket.on('join', (data) => {
+    //     console.log(data)
+    // })
 });
