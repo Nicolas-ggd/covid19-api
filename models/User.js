@@ -17,6 +17,11 @@ const User = new mongoose.Schema(
             type: String,
             required: true,
         },
+        online: {
+            type: Boolean,
+            required: false,
+            default: false
+        },
         refresh_token: String,
         ResetPasswordHash: {
             type: mongoose.Schema.Types.ObjectId,
