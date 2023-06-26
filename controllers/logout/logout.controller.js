@@ -2,46 +2,38 @@ const User = require('../../models/User');
 
 const userLogout = async (req, res) => {
     const cookies = req.cookies;
+    const { userId } = req.body;
 
     try {
-        if (!cookies?.jwt) {
-            return res.status(204).json({ message: "No content" });
-        }
 
-        const refresh_token = cookies.jwt;
-        const authUser = await User.find({ refresh_token });
+        const user = await User.findOne({ _id: userId });
 
-        if (!authUser) {
-            res.clearCookie(
-                'jwt',
+        if (user) {
+
+            await User.updateOne(
+                { _id: userId },
                 {
-                    httpOnly: true,
-                    sameSite: 'None',
-                    secure: true
+                    $set: {
+                        online: false
+                    }
                 }
             );
-            return res.status(204).json({ "message": "No content, no problesms :)" });
+
+            res.cookie("access_token", "", {
+                sameSite: "none",
+                httpOnly: true,
+                secure: true,
+            });
+
+            res.cookie("refresh_token", "", {
+                sameSite: "none",
+                httpOnly: true,
+                secure: true,
+            });
+
+            return res.status(200).send("logged out");
         }
 
-        await User.updateOne(
-            { refresh_token: refresh_token },
-            {
-                $set: {
-                    refresh_token: ''
-                }
-            }
-        );
-
-        res.clearCookie(
-            'jwt',
-            {
-                httpOnly: true,
-                sameSite: 'None',
-                secure: true
-            }
-        );
-
-        res.status(204).json({ message: "No content" });
     } catch (error) {
         return res.status(400).json(error);
     }
