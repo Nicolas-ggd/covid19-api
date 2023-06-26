@@ -45,7 +45,8 @@ const userAuth = async (req, res) => {
                 { email: authUser.email },
                 {
                     $set: {
-                        refresh_token: refresh_token
+                        refresh_token: refresh_token,
+                        online: true
                     }
                 }
             );
