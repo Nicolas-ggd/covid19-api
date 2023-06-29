@@ -1,6 +1,6 @@
-## 👋 Hi devs, this is my watch-movies project.
+## 👋 Hi devs, this is my covid-19-api project.
 
-### ⚡ watch-movies writen with Node.js, Express.js, MongoDB and Socket.IO.
+### ⚡ covid-19-api writen with Node.js, Express.js, MongoDB and Socket.IO.
 
 ### 🌀 After installing the project run
 
