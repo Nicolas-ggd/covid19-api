@@ -23,7 +23,7 @@ app.use(credentials);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
-
+app.options('*', cors())
 app.use('/register', register);
 app.use('/auth', userAuth);
 app.use('/logout', userLogOut);
@@ -47,7 +47,8 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log(`⚡: ${socket.id} user just connected!`);
 
-    // socket.on('join', (data) => {
-    //     console.log(data)
-    // })
+    socket.on("disconnect", () => {
+        console.log(`${socket.id} user disconnected!`);
+    });
+
 });
