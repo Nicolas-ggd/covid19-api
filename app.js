@@ -12,6 +12,7 @@ const register = require('./controllers/register/register.routes');
 const userAuth = require('./controllers/auth/auth.routes');
 const userLogOut = require('./controllers/logout/logout.routes');
 const resetPassword = require('./controllers/resetPassword/resetPassword.routes');
+const covidApi = require('./controllers/covid-api/covidapi.routes');
 
 const app = express();
 dotenv.config();
@@ -26,6 +27,7 @@ app.use('/register', register);
 app.use('/auth', userAuth);
 app.use('/logout', userLogOut);
 app.use('/reset-password', resetPassword);
+app.use('/covid', covidApi);
 
 app.use(verifyJWT);
 app.use(notFound);
