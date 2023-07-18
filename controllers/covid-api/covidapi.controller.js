@@ -1,21 +1,21 @@
 const axios = require('axios')
 
 const getCovidData = async (req, res) => {
-    // url = https://corona.lmao.ninja/v2/countries
-        let covidData
+    const queryData = req.query;
+    const page = queryData.page ? parseInt(queryData.page) : 1;
+    const limit = queryData.limit ? parseInt(queryData.limit) : 7;
+
     try {
-        await axios.get('https://corona.lmao.ninja/v2/countries')
-        .then((res) => {
-            const data = res.data;
-            covidData = data;
-        })
-        .catch((res) => {
-            console.log(res)
-        })
-        
-        return res.status(200).json(covidData);
+        const response = await axios.get(`https://corona.lmao.ninja/v2/countries?page=${page}&limit=${limit}`);
+        const data = response.data;
+        const startIdx = (page - 1) * limit;
+        const endIdx = startIdx + limit;
+
+        const chunkData = data.slice(startIdx, endIdx);
+
+        return res.status(200).json(chunkData);
     } catch (error) {
-        return res.status(400).json({ message: "Can't get covid data." })
+        return res.status(400).json({ message: "Can't get covid data." });
     }
 };
 
