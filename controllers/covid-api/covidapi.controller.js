@@ -15,7 +15,7 @@ const getCovidData = async (req, res) => {
       const filteredData = data.filter((item) =>
         item.country.toLowerCase().includes(search.toLowerCase())
       );
-  
+
       const startIdx = (page - 1) * limit;
       const endIdx = startIdx + limit;
   
