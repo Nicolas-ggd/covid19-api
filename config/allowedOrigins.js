@@ -3,8 +3,8 @@ const allowedOrigins = [
     'https://ggd-covid19.netlify.app',
     'http://localhost:8000/refresh',
     'http://localhost:8000/login',
-    'https://covid19-api-rj18.onrender.com/login',
     'https://covid19-api-rj18.onrender.com/refresh',
+    'https://covid19-api-rj18.onrender.com/login',
     'https://corona.lmao.ninja/v2/countries'
 ];
 
