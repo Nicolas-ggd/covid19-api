@@ -23,7 +23,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.options('*', cors())
 app.options(cors({
-    origin: 'https://covit-api.netlify.app'
+    origin: 'https://ggd-covid19.netlify.app/'
 }));
 app.use('/register', register);
 app.use('/auth', userAuth);
